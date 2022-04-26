@@ -14,6 +14,7 @@ let totalValue = 0;
 let input = "";
 let quOperator = ""; //queued Operator
 let operatorInUse = false;
+let isEvaluated = false;
 
 
 
@@ -22,6 +23,10 @@ let operatorInUse = false;
 // pushes text content of buttons to the input field
 for (let i = 0; i < numpadButtons.length; i++){
     numpadButtons[i].addEventListener('click', () => {
+        if (isEvaluated == true){
+            inputBox.textContent = "";
+            isEvaluated = false;
+        }
         inputBox.textContent += (numpadButtons[i].textContent);
         currentValue += (numpadButtons[i].textContent);
         operatorInUse = false;
@@ -40,16 +45,16 @@ Updates answerBox text content with totalValue
 // takes values and quOperator and spits out result
 function operation(a,b,operator){
     switch (operator) {
-        case "add":
+        case "+":
             return +a + +b;
             break;
-        case "subtract":
+        case "-":
             return +a - +b;
             break;
-        case "multiply":
+        case "x":
             return +a * +b;
             break;
-        case "divide":
+        case "/":
             return +a / +b;
             break;
         case "":
@@ -58,49 +63,102 @@ function operation(a,b,operator){
     }
 }
 
-//addition
-add.addEventListener("click", () =>{
-    if (currentValue != ""){
-    totalValue = operation(totalValue, currentValue, quOperator);
-    quOperator = "add"
-    currentValue = "";
-    answerBox.textContent = totalValue;
-    inputBox.textContent += " + ";
+
+function calculate(){
+
+    let operator = this.textContent;
+
+    if (operator == "+" || operator == "-" || operator == "x" || operator == "/"){
+        if (currentValue != "" && !operatorInUse){
+            totalValue = operation(totalValue, currentValue, quOperator);
+            quOperator = operator;
+            currentValue = "";
+            operatorInUse = true;
+            answerBox.textContent = totalValue;
+            inputBox.textContent += ` ${operator} `;
+        } else if (totalValue != ""){
+            quOperator = operator;
+            let string = inputBox.textContent;
+                //    inputBox.textContent = string.slice(0,string.length - 3) + ` ${operator} `;
+        }
+        isEvaluated = false;
+    } else if(operator == "="){
+        if (currentValue != ""){
+            totalValue = operation(totalValue, currentValue, quOperator);
+            quOperator = ""
+            currentValue = "";
+            answerBox.textContent = totalValue;
+            inputBox.textContent += ` = ${totalValue}`;
+            operatorInUse = true;
+            isEvaluated = true;
+        }
     }
-});
+}
+
+add.addEventListener("click",calculate);
+equal.addEventListener("click", calculate);
+subtract.addEventListener("click",calculate);
+multiply.addEventListener("click",calculate);
+divide.addEventListener("click",calculate);
+
+
+//addition
+// add.addEventListener("click", () =>{
+//     if (currentValue != "" && !operatorInUse){
+//         totalValue = operation(totalValue, currentValue, quOperator);
+//         quOperator = "add";
+//         currentValue = "";
+//         operatorInUse = true;
+//         answerBox.textContent = totalValue;
+//         inputBox.textContent += " + ";
+//     } else if (totalValue != ""){
+//         quOperator = "add";
+//         let string = inputBox.textContent;
+//         inputBox.textContent = string.slice(0,string.length - 3) + " + ";
+//     }
+// });
 
 //subtraction
-subtract.addEventListener("click", () =>{
-    totalValue = operation(totalValue, currentValue, quOperator);
-    quOperator = "subtract"
-    currentValue = "";
-    answerBox.textContent = totalValue;
-    inputBox.textContent += " - ";
-});
+// subtract.addEventListener("click", () =>{
+//     if (currentValue != ""){
+//         totalValue = operation(totalValue, currentValue, quOperator);
+//         quOperator = "subtract"
+//         currentValue = "";
+//         answerBox.textContent = totalValue;
+//         inputBox.textContent += " - ";
+//     }
+// });
 
-//multiplication
-multiply.addEventListener("click", () =>{
-    totalValue = operation(totalValue, currentValue, quOperator);
-    quOperator = "multiply"
-    currentValue = "";
-    answerBox.textContent = totalValue;
-    inputBox.textContent += " x ";
-});
+// //multiplication
+// multiply.addEventListener("click", () =>{
+//     if (currentValue != ""){
+//         totalValue = operation(totalValue, currentValue, quOperator);
+//         quOperator = "multiply"
+//         currentValue = "";
+//         answerBox.textContent = totalValue;
+//         inputBox.textContent += " x ";
+//     }
+// });
 
-//division
-divide.addEventListener("click", () =>{
-    totalValue = operation(totalValue, currentValue, quOperator);
-    quOperator = "divide"
-    currentValue = "";
-    answerBox.textContent = totalValue;
-    inputBox.textContent += " / ";
-});
+// //division
+// divide.addEventListener("click", () =>{
+//     if (currentValue != ""){
+//         totalValue = operation(totalValue, currentValue, quOperator);
+//         quOperator = "divide"
+//         currentValue = "";
+//         answerBox.textContent = totalValue;
+//         inputBox.textContent += " / ";
+//     }
+// });
 
 //equal
-equal.addEventListener("click", () =>{
-    totalValue = operation(totalValue, currentValue, quOperator);
-    quOperator = ""
-    currentValue = "";
-    answerBox.textContent = totalValue;
-    inputBox.textContent += ` = ${totalValue}`;
-});
+//equal.addEventListener("click", () =>{
+//     if (currentValue != ""){
+//         totalValue = operation(totalValue, currentValue, quOperator);
+//         quOperator = ""
+//         currentValue = "";
+//         answerBox.textContent = totalValue;
+//         inputBox.textContent += ` = ${totalValue}`;
+//     }
+// });
+
