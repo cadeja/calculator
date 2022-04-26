@@ -13,6 +13,7 @@ let currentValue = "";
 let totalValue = 0;
 let input = "";
 let quOperator = ""; //queued Operator
+let operatorInUse = false;
 
 
 
@@ -23,6 +24,7 @@ for (let i = 0; i < numpadButtons.length; i++){
     numpadButtons[i].addEventListener('click', () => {
         inputBox.textContent += (numpadButtons[i].textContent);
         currentValue += (numpadButtons[i].textContent);
+        operatorInUse = false;
     });
 }
 
@@ -58,10 +60,13 @@ function operation(a,b,operator){
 
 //addition
 add.addEventListener("click", () =>{
-    answerBox.textContent = operation(totalValue, currentValue, quOperator);
+    if (currentValue != ""){
+    totalValue = operation(totalValue, currentValue, quOperator);
     quOperator = "add"
     currentValue = "";
+    answerBox.textContent = totalValue;
     inputBox.textContent += " + ";
+    }
 });
 
 //subtraction
