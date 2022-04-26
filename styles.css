@@ -1,0 +1,22 @@
+* {
+    border: 1px solid red;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+}
+
+.calculator-buttons {
+    display: flex;
+
+}
+
+.numpad-button {
+    width: 50px;
+    height: 50px;
+}
+
+.numpad
+
+.operators
