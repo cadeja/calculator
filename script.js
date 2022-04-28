@@ -30,6 +30,7 @@ for (let i = 0; i < numpadButtons.length; i++){
         // if a number is pressed after pressing the "=" button, clears the inputBox
         if (isEvaluated == true){    
             inputBox.textContent = "";
+            currentValue = "";
             isEvaluated = false;
         }
 
@@ -128,7 +129,7 @@ function calculate(){
         } 
 
         // =
-        else if(operator == "="){
+        else if(operator == "=" && isEvaluated == false){
             if (currentValue != ""){
                 totalValue = operation(totalValue, currentValue, quOperator);
                 quOperator = ""
@@ -146,65 +147,3 @@ equal.addEventListener("click", calculate);
 subtract.addEventListener("click",calculate);
 multiply.addEventListener("click",calculate);
 divide.addEventListener("click",calculate);
-
-
-//addition
-// add.addEventListener("click", () =>{
-//     if (currentValue != "" && !operatorInUse){
-//         totalValue = operation(totalValue, currentValue, quOperator);
-//         quOperator = "add";
-//         currentValue = "";
-//         operatorInUse = true;
-//         answerBox.textContent = totalValue;
-//         inputBox.textContent += " + ";
-//     } else if (totalValue != ""){
-//         quOperator = "add";
-//         let string = inputBox.textContent;
-//         inputBox.textContent = string.slice(0,string.length - 3) + " + ";
-//     }
-// });
-
-//subtraction
-// subtract.addEventListener("click", () =>{
-//     if (currentValue != ""){
-//         totalValue = operation(totalValue, currentValue, quOperator);
-//         quOperator = "subtract"
-//         currentValue = "";
-//         answerBox.textContent = totalValue;
-//         inputBox.textContent += " - ";
-//     }
-// });
-
-// //multiplication
-// multiply.addEventListener("click", () =>{
-//     if (currentValue != ""){
-//         totalValue = operation(totalValue, currentValue, quOperator);
-//         quOperator = "multiply"
-//         currentValue = "";
-//         answerBox.textContent = totalValue;
-//         inputBox.textContent += " x ";
-//     }
-// });
-
-// //division
-// divide.addEventListener("click", () =>{
-//     if (currentValue != ""){
-//         totalValue = operation(totalValue, currentValue, quOperator);
-//         quOperator = "divide"
-//         currentValue = "";
-//         answerBox.textContent = totalValue;
-//         inputBox.textContent += " / ";
-//     }
-// });
-
-//equal
-//equal.addEventListener("click", () =>{
-//     if (currentValue != ""){
-//         totalValue = operation(totalValue, currentValue, quOperator);
-//         quOperator = ""
-//         currentValue = "";
-//         answerBox.textContent = totalValue;
-//         inputBox.textContent += ` = ${totalValue}`;
-//     }
-// });
-
